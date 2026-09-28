@@ -1,101 +1,145 @@
-# 🚀 OVERWORLD HACKATHON (ROUND 1) — ATTENDANCE PREDICTOR
-### *The Complete Phase 1 & Phase 2 Deterministic Attendance Decision Platform*
+# 🚀 OVERWORLD HACKATHON (ROUNDS 1 & 2) — ATTENDANCE PREDICTOR & FREE CLASS LOCATOR
+### *The Complete Unified Campus Intelligence Platform: Deterministic Decision Engine & 3D Spatial Room Locator*
 
-> **Official Problem Statement:** Attendance Predictor (Phase 1 & Phase 2 Unified)  
 > **Institution:** SRM Institute of Science and Technology — School of Electrical & Electronics Engineering (SEEE)  
 > **Academic Session:** August 29, 2026 — November 29, 2026  
 > **Current Reference Date:** September 28, 2026  
-> **Status:** 🏆 Complete, Unified Single Web Application with AI Voice Advisor & PDF Reporting  
+> **Repository:** [https://github.com/vairavagnanesh2007-glitch/SRM_YUVA](https://github.com/vairavagnanesh2007-glitch/SRM_YUVA)  
+> **Status:** 🏆 Complete, Unified Single Web Application with 33/33 Automated Tests Passing  
 
 ---
 
 ## 📑 Table of Contents
-1. [Executive Summary & Core Product Thesis](#1-executive-summary--core-product-thesis)
-2. [Phase 1 & Phase 2 Capability Matrix](#2-phase-1--phase-2-capability-matrix)
-3. [Timetable Extraction & Ground-Truth Dataset](#3-timetable-extraction--ground-truth-dataset)
-4. [Authoritative Mathematical Framework](#4-authoritative-mathematical-framework)
+1. [Executive Summary & Core Platform Thesis](#1-executive-summary--core-platform-thesis)
+2. [Unified Capability Matrix (Round 1 & Round 2)](#2-unified-capability-matrix-round-1--round-2)
+3. [Round 2: The Free Class Locator](#3-round-2-the-free-class-locator)
+   - [Phase 1: The Smart-Search Floor Manager & AI Room Finder](#phase-1-the-smart-search-floor-manager--ai-room-finder)
+   - [Phase 2: The 3D Spatial Map, Live Countdown Timer & Call the Squad](#phase-2-the-3d-spatial-map-live-countdown-timer--call-the-squad)
+4. [Round 1: Attendance Predictor & Decision Engine](#4-round-1-attendance-predictor--decision-engine)
+   - [Authoritative Mathematical Framework](#authoritative-mathematical-framework)
+   - [Timetable Ground-Truth Dataset (10 Scanned Schedules)](#timetable-ground-truth-dataset)
+   - [Visual Health Dashboard & OD Simulator](#visual-health-dashboard--od-simulator)
+   - [Daily Attendance Marking & Leave Planner](#daily-attendance-marking--leave-planner)
+   - [Real Voice-Enabled AI Attendance Advisor](#real-voice-enabled-ai-attendance-advisor)
+   - [Official PDF Attendance Record Export](#official-pdf-attendance-record-export)
 5. [System Architecture](#5-system-architecture)
-6. [Phase 2 Core Innovations](#6-phase-2-core-innovations)
-   - [A. Visual Tracking & Multi-Subject Health Dashboard](#a-visual-tracking--multi-subject-health-dashboard)
-   - [B. The On-Duty (OD) & Medical Leave Simulator](#b-the-on-duty-od--medical-leave-simulator)
-   - [C. The "Attendance Advisor" AI Assistant (With Voice Integration)](#c-the-attendance-advisor-ai-assistant-with-voice-integration)
-   - [D. Client-Side Official PDF Report Generator](#d-client-side-official-pdf-report-generator)
-7. [REST API Documentation](#7-rest-api-documentation)
-8. [Automated Test Suite & Verification (23 Tests Passing)](#8-automated-test-suite--verification)
-9. [Judge Demonstration Script (Winning Hackathon Pitch)](#9-judge-demonstration-script-winning-hackathon-pitch)
-10. [Local Setup & Execution Guide](#10-local-setup--execution-guide)
+6. [Automated Test Suite & Verification (33 Tests Passing)](#6-automated-test-suite--verification)
+7. [Judge Demonstration Script (Winning Hackathon Pitch)](#7-judge-demonstration-script)
+8. [Local Setup & Live Execution Guide](#8-local-setup--live-execution-guide)
 
 ---
 
-## 1. Executive Summary & Core Product Thesis
+## 1. Executive Summary & Core Platform Thesis
 
-College attendance portals (such as SRM Academia ERP) fail students by providing only **backward-looking, passive historical data** (e.g. *"Your attendance is 68.2%"*). 
+University campuses present two major operational and academic challenges to engineering students:
+1. **Academic Risk:** Traditional ERP portals only report backward-looking historical percentages (*"Your attendance is 68.2%"*), hiding whether safe recovery is mathematically possible or if detention is already irreversible.
+2. **Campus Space Optimization:** Finding an empty, air-conditioned classroom for project work, hackathons, or group study between scheduled periods requires wandering across multiple floors blindly.
 
-Students are left to guess:
-- *Can I afford to miss tomorrow's 8:00 AM Discrete Mathematics lecture?*
-- *How many consecutive classes must I attend to escape the detention zone?*
-- *If I take a 3-day sick leave starting tomorrow, will my attendance crash below 75%?*
-- *Can On-Duty (OD) approval for a national hackathon rescue me from detention?*
-
-**Overworld Attendance Predictor** delivers a single unified, end-to-end platform that combines:
-1. **Deterministic Attendance Math Engine:** Integer ceiling arithmetic with epsilon buffers ($\epsilon = 10^{-9}$), exact 75%/90% targets, safe-to-miss allowances, and loud Irreversible Detention warnings.
-2. **Real Timetable Schedule Ingestion:** Ingests all 10 SRM SEEE scanned PDF class timetables and calendar dates (Aug 29 – Nov 29, 2026).
-3. **Phase 2 Visual Health Dashboard:** Recharts bar charts, health spectrum donut charts, and cross-subject risk metrics.
-4. **Phase 2 On-Duty (OD) Simulator:** Simulates academic/medical leaves against the real timetable and drafts official HOD approval letters.
-5. **Phase 2 AI Attendance Advisor with Voice Assistance:** Floating AI chatbot that understands natural language queries, runs exact timetable math, and speaks answers aloud using speech synthesis.
-6. **Download Attendance as PDF:** Official printable compliance reports with verification stamps and signature blocks.
+**SRM Yuva Campus Intelligence Platform** solves both challenges inside a single, unified web application combining:
+- **Round 1 (Attendance Predictor):** Deterministic integer math ($\lceil \dots \rceil, \epsilon = 10^{-9}$), exact 75%/90% recovery horizons, safe miss limits, multi-subject visual health dashboards, On-Duty (OD) simulations, and daily attendance marking.
+- **Round 2 (Free Class Locator):** Dynamic occupancy mapping of all 10 section timetables across 7 floors of the IST Building, natural language AI Room Finder, 3D interactive building map, live countdown clock down to the second, and 1-click WhatsApp "Call the Squad" summoning.
 
 ---
 
-## 2. Phase 1 & Phase 2 Capability Matrix
+## 2. Unified Capability Matrix (Round 1 & Round 2)
 
-| Feature Category | Problem Statement Specification | Implementation in Our Platform |
+| Feature Category | Problem Statement Requirement | Implementation in Our Platform |
 | :--- | :--- | :--- |
-| **Phase 1: Core Calculator** | Select section, enter % or conducted/attended, calculate remaining, 75%/90% requirements, and safe skips | ✅ Dual Input Modes (Simple % vs Exact $C, A$), exact integer bounds, countdown clock |
-| **Phase 1: Warning System** | Irreversible Detention alert when $MaxPossible < 75\%$ | ✅ Loud animated red alert box, locking safe skips to 0, explaining mathematical impossibility |
-| **Phase 1: Timetables** | All 10 section timetables from dataset | ✅ All 10 sections extracted into `timetables.json`, interactive weekly period matrix (P1–P9) |
-| **Phase 2: Visual Charts** | Clear visual charts showing overall student attendance health | ✅ Subject Bar Chart vs 75%/90% cutoffs, Donut health spectrum, and multi-course cards |
-| **Phase 2: The OD Simulator** | Input On-Duty / Medical Leave days, recalculate final percentage instantly | ✅ Calendar range picker, timetable period matching, credit vs deduction policy, detention rescue counter |
-| **Phase 2: The AI Assistant** | Floating AI chatbot answering queries like *"If I take a 3-day sick leave, will I drop below 75%?"* | ✅ Natural language parser, timetable traversal, deterministic projection, rich advice & chips |
-| **Winning Extra: Voice Assistance**| Interactive spoken dialogue for student accessibility | ✅ Web Speech API Speech-to-Text (STT) mic input + Text-to-Speech (TTS) voice playback |
-| **Winning Extra: PDF Export** | Official printable attendance record | ✅ Client-side PDF generation (`jspdf`) with SRM SEEE letterhead, math proof, & signature lines |
-| **Submission Rule** | Single unified web application with live deployment | ✅ Single integrated React 19 + FastAPI app containing all features in one cohesive UI |
+| **R2: The Floor Grid** | Find empty classrooms using 10 class timetables floor-by-floor | ✅ Floors 1–7 filter, live status (🟢 Free, 🟡 Ending Soon, 🔴 Occupied), AC & Projector filters |
+| **R2: The AI Room Finder** | Natural language search (*"I need an AC room on the ground floor for me and my team for the next 2 hours"*) | ✅ Intelligent NLP parser extracting floor, duration, AC, team seating, and quiet rating with ranked match scores |
+| **R2: The 3D Spatial Map** | Interactive 3D building model with color-coded room pods | ✅ Isometric 3D perspective, CAD Blueprint schematic, and 7-floor tower stack with elevation hover |
+| **R2: Live Countdown Timer** | Exact time remaining before next scheduled class begins | ✅ Real-time digital clock (`HH:MM:SS`) ticking down to the second, next class subject & faculty |
+| **R2: Call the Squad** | One-click WhatsApp button generating: `"📍 Heading to [Room]. It's free until [Time]. Come fast!"` | ✅ 1-click WhatsApp URL launch (`https://wa.me/?text=...`) + 1-click clipboard copy button |
+| **R1: Core Calculator** | Dual input mode, exact 75% & 90% targets, safe skips, recovery horizon | ✅ Deterministic integer ceiling math, exact class counts, countdown gauge |
+| **R1: Detention Warning** | Detect when $MaxPossible < 75.0\%$ | ✅ Loud Irreversible Detention warning locking safe skips to 0 |
+| **R1: Visual Dashboard** | Overall student attendance health across all subjects | ✅ Recharts bar chart, 75%/90% benchmark lines, health spectrum donut chart |
+| **R1: The OD Simulator** | Input On-Duty / Medical Leave days and recompute final % | ✅ Date range period matcher, credit policy, formal HOD approval letter drafting |
+| **R1: Daily Attendance** | Mark present/absent per subject with live history log | ✅ Timetable-aware daily sheet with local persistent storage and history log |
+| **R1: Leave Planner** | Multi-day leave impact prediction | ✅ Scans upcoming timetable dates and calculates post-leave attendance % per subject |
+| **R1: AI Voice Advisor** | Floating assistant answering natural language questions | ✅ Voice input (Speech-to-Text) + Voice playback (Text-to-Speech) + Rich reasoning |
+| **R1: PDF Report Export** | Official printable attendance record | ✅ Client-side `jspdf` report with university letterhead, math proof, & verification seal |
 
 ---
 
-## 3. Timetable Extraction & Ground-Truth Dataset
+## 3. Round 2: The Free Class Locator
 
-All 10 scanned image PDF schedules from `dataset/timetables.zip` were converted into a normalized, type-safe database at [`backend/data/timetables.json`](file:///c:/intern/yuva/backend/data/timetables.json).
+### Phase 1: The Smart-Search Floor Manager & AI Room Finder
 
-### Verified Sections Extracted:
-| Section ID | Class & Section | Venue | Shift | Students | Weekly Contact Hrs | Source File |
-| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| `III-ECE-B` | III ECE B (Sem V) | IST 518/AN | AN | 65 | 32 hrs | `III-Year-ECE_B Section.pdf` |
-| `III-ECE-A` | III ECE A (Sem V) | IST 517/AN | AN | 65 | 32 hrs | `III-Year-ECE_A Section.pdf` |
-| `III-ECE-DS`| III ECE DS (Sem V) | IST 519/AN | AN | 65 | 31 hrs | `III-Year-ECE_DS Section.pdf` |
-| `III-BME` | III BME (Sem V) | IST 520/AN | AN | 40 | 30 hrs | `III-Year-BME Section.pdf` |
-| `II-BME` | II BME (Sem III) | IST 516/FN | FN | 45 | 30 hrs | `II-Year-BME Section.pdf` |
-| `II-ECE-DS-A`| II ECE DS A (Sem III)| IST 514/FN | FN | 65 | 32 hrs | `II-Year-ECE_DS_A Section.pdf` |
-| `II-ECE-DS-B`| II ECE DS B (Sem III)| IST 515/FN | FN | 65 | 32 hrs | `II-Year-ECE_DS_B Section.pdf` |
-| `IV-ECE-A` | IV ECE A (Sem VII)| IST 512/FN | FN | 65 | 28 hrs | `IV-Year-ECE_A Section.pdf` |
-| `IV-ECE-B` | IV ECE B (Sem VII)| IST 513/FN | FN | 65 | 28 hrs | `IV-Year-ECE_B Section.pdf` |
-| `I-ECE-A` | I ECE A (Sem I) | TP 401/FN | FN | 65 | 30 hrs | `I-Year-ECE_A Section.pdf` |
+#### The Floor Grid
+- Mapped across the canonical **IST Building** room directory:
+  - **Ground Floor (Floor 1):** `IST 101`, `IST 102`, `IST 105`
+  - **2nd Floor (Floor 2):** `IST 211`, `IST 225`, `IST 227`
+  - **3rd Floor (Floor 3):** `IST 301`, `IST 305`
+  - **4th Floor (Floor 4):** `IST 411`, `IST 416`
+  - **5th Floor (Floor 5):** `IST 509`, `IST 518`, `IST 519`
+  - **6th Floor (Floor 6):** `IST 602`
+  - **7th Floor (Floor 7):** `IST 710`
+- Automatically cross-references scheduled periods P1 to P9 (09:00 AM to 04:50 PM) against the timetable database.
+- Calculates live room occupancy:
+  - 🟢 **FREE:** Room has no scheduled lecture during the selected period.
+  - 🟡 **ENDING SOON:** Room is free right now, but the next class starts in $<30$ minutes.
+  - 🔴 **OCCUPIED:** Class is currently in progress; displays section, subject, and finish time.
+
+#### The AI Room Finder
+Users can search with natural queries in plain English.
+* **Official Hackathon Query Tested:**
+  > *"I need an AC room on the ground floor for me and my team for the next 2 hours."*
+* **NLP Extraction Engine:**
+  - Extracts target floor: `Ground Floor -> Floor 1`
+  - Extracts duration requirement: `2 hours -> 120 minutes`
+  - Extracts amenities: `requiresAC = True`, `isTeamGroup = True`
+  - Returns ranked matches with percentage match scores and explanations:
+    - **IST 101 (99% Match):** *Located exactly on Ground Floor • Air-conditioned (AC enabled) • Spacious seating for 45 team members • Guaranteed free for 3h 30m (until 5:00 PM)*
 
 ---
 
-## 4. Authoritative Mathematical Framework
+### Phase 2: The 3D Spatial Map, Live Countdown Timer & Call the Squad
 
-All calculations are executed in integer space on the backend using ceiling arithmetic and floating-point epsilon buffers ($\epsilon = 10^{-9}$):
+#### 3D Interactive Spatial Map
+- **Isometric 3D Perspective:** Multi-floor 3D view with realistic floor depth, perspective transforms, and hover elevation states.
+- **Architectural CAD Blueprint Mode:** Minimalist technical wireframe view for engineering presentations.
+- **Tower Stack Mode (7F):** High-level vertical building stack showing real-time occupancy counts per floor.
+
+#### Live Digital Countdown Timer
+Clicking any room opens a full modal featuring:
+- Real-time digital clock (`HH:MM:SS`) ticking down to the exact second.
+- Room specs: Full capacity, AC status ❄️, Projector status 📽️, Quiet Focus Rating 🎧.
+- Next scheduled class details: Subject code, Subject title, Section, and Faculty name.
+
+#### The "Call the Squad" Feature
+- **1-Click WhatsApp Button:** Opens `https://wa.me/?text=...` with the exact required format:
+  ```text
+  📍 Heading to IST 101. It's free until 5:00 PM. Come fast!
+  ```
+- **Copy Squad Message Button:** Copies the message to the system clipboard with instant visual feedback.
+
+---
+
+## 4. Round 1: Attendance Predictor & Decision Engine
+
+### Authoritative Mathematical Framework
+
+All calculations are evaluated in integer space using ceiling arithmetic and floating-point epsilon buffers ($\epsilon = 10^{-9}$):
 
 - $C \in \mathbb{N}_0$: Classes conducted to date (Aug 29 to reference date).
 - $A \in \mathbb{N}_0$: Classes attended to date ($0 \le A \le C$).
-- $R \in \mathbb{N}_0$: Scheduled classes remaining in semester.
-- $N = C + R$: Total classes in the entire semester.
+- $R \in \mathbb{N}_0$: Scheduled classes remaining in the semester.
+- $N = C + R$: Total classes across the entire semester.
 
-$$\text{Current} = \operatorname{round}\left(\frac{A}{C} \times 100, 1\right), \quad \text{MaxPossible} = \operatorname{round}\left(\frac{A + R}{N} \times 100, 1\right)$$
-$$\text{TargetTotalClasses} = \lceil T \times N - \epsilon \rceil, \quad \text{RequiredToAttend} = \max(0, \text{TargetTotalClasses} - A)$$
-$$\text{SafeToMiss} = \max(0, R - \text{RequiredToAttend})$$
-$$\text{Irreversible Detention} \iff \text{MaxPossible} < 75.0\% \iff A + R < \lceil 0.75 \times N - \epsilon \rceil$$
+$$\text{Current Attendance} = \operatorname{round}\left(\frac{A}{C} \times 100, 1\right)$$
+$$\text{Max Possible Attendance} = \operatorname{round}\left(\frac{A + R}{N} \times 100, 1\right)$$
+$$\text{Target Classes Needed} = \lceil T \times N - \epsilon \rceil, \quad \text{Required Classes to Attend} = \max(0, \text{Target Classes Needed} - A)$$
+$$\text{Safe Classes to Miss} = \max(0, R - \text{Required Classes to Attend})$$
+$$\text{Irreversible Detention} \iff \text{Max Possible Attendance} < 75.0\% \iff A + R < \lceil 0.75 \times N - \epsilon \rceil$$
+
+---
+
+### Timetable Ground-Truth Dataset
+
+All 10 scanned PDF schedules from `dataset/timetables.zip` are parsed into a normalized database at `backend/data/timetables.json`:
+- `III-ECE-B`, `III-ECE-A`, `III-ECE-DS`, `III-BME`
+- `II-ECE-DS-A`, `II-ECE-DS-B`, `II-BME`
+- `IV-ECE-A`, `IV-ECE-B`, `I-ECE-A`
 
 ---
 
@@ -103,170 +147,84 @@ $$\text{Irreversible Detention} \iff \text{MaxPossible} < 75.0\% \iff A + R < \l
 
 ```mermaid
 flowchart TD
-    subgraph Frontend["Frontend: React 19 + Tailwind CSS + Lucide Icons"]
-        LP["Landing Page (/)"]
-        CP["Decision Engine (/calculator)"]
-        DP["Visual Health Dashboard (/dashboard)"]
-        OP["OD & Medical Leave Simulator (/od-simulator)"]
-        TP["Class Timetable Explorer (/timetable)"]
-        AI["AI Attendance Advisor (Floating Voice Widget)"]
-        PDF["Official PDF Report Generator (jspdf)"]
-    end
+    Client["React 19 Frontend (Vite + Tailwind CSS v4)"]
+    Router["Client Routing (/ & /locator)"]
+    Fallback["Client Fallback Engine (Embedded Timetables)"]
+    API["FastAPI Backend Service"]
+    RoomsService["Room Locator Service (IST Building)"]
+    AttendanceEngine["Deterministic Math Engine"]
+    TimetableService["Timetable Ingestion Service (10 Sections)"]
 
-    subgraph Backend["FastAPI Backend (Port 8000)"]
-        R_ATT["/api/attendance/*"]
-        R_SEC["/api/sections/*"]
-        R_OD["/api/od/simulate"]
-        R_CHAT["/api/chat/advisor"]
-        R_DASH["/api/dashboard/*"]
-        
-        SVC_ATT["Attendance Service"]
-        SVC_OD["On-Duty Service"]
-        SVC_ADV["AI Advisor Service"]
-        SVC_DASH["Dashboard Service"]
-        SVC_DATE["Date & Calendar Engine"]
-        SVC_TIME["Timetable Service"]
-        ENG_MATH["Deterministic Calculation Engine"]
-    end
-
-    subgraph Database["Ground-Truth Data"]
-        JSON_DB[("timetables.json (10 Sections)")]
-    end
-
-    CP & DP & OP & AI -->|REST /api| Backend
-    R_ATT --> SVC_ATT
-    R_OD --> SVC_OD
-    R_CHAT --> SVC_ADV
-    R_DASH --> SVC_DASH
-    
-    SVC_ATT & SVC_OD & SVC_ADV & SVC_DASH --> ENG_MATH
-    SVC_ATT & SVC_OD & SVC_ADV & SVC_DASH --> SVC_DATE & SVC_TIME
-    SVC_DATE & SVC_TIME --> JSON_DB
+    Client --> Router
+    Router --> API
+    API --> RoomsService
+    API --> AttendanceEngine
+    API --> TimetableService
+    Router -.-> Fallback
 ```
 
 ---
 
-## 6. Phase 2 Core Innovations
+## 6. Automated Test Suite & Verification
 
-### A. Visual Tracking & Multi-Subject Health Dashboard (`/dashboard`)
-- **Cutoff Comparison Bar Chart:** Direct visual comparison of every subject's current attendance against the 75% Mandatory Danger line and 90% Distinction line.
-- **Attendance Health Spectrum (Donut Chart):** Visualizes the section's breakdown into Safe ($\ge 80\%$), Watch ($75\text{--}79\%$), Danger ($< 75\%$), and Detained ($MaxPossible < 75\%$).
-- **Course Action Cards:** Cards for every subject in the section with 1-click shortcuts to Predict, Simulate OD, or Download PDF.
-
-### B. The On-Duty (OD) & Medical Leave Simulator (`/od-simulator`)
-- **Calendar Date Range Picker:** Select any start and end date between Aug 29 and Nov 29, 2026.
-- **Real Timetable Period Matching:** Traverses the actual timetable to locate the exact lecture/lab periods that occur on those dates.
-- **Regulatory Policy Options:**
-  - *Convert to Attended (Credit Mode):* Missed periods are converted into attended classes, boosting attendance score.
-  - *Exempt from Conducted (Deduct Mode):* Excused medical leave days are subtracted from total conducted classes.
-- **Detention Rescue Counter:** Tracks how many subjects were rescued from the detention list by the leave grant.
-- **1-Click Official OD Application Letter:** Formats a pre-filled, formal application draft with course list and signature lines ready to submit to the HOD.
-
-### C. The "Attendance Advisor" AI Assistant (With Voice Integration)
-- Floating assistant widget accessible on every screen.
-- Answers complex multi-part natural language questions with zero mathematical hallucination:
-  - *"If I take a 3-day sick leave starting tomorrow, will my Discrete Mathematics attendance drop below 75%?"*
-  - *"Can I skip Friday's afternoon lectures?"*
-  - *"How many classes can I safely miss?"*
-  - *"What is my pathway to reach 90%?"*
-- **Speech-to-Text (STT):** Click the mic icon to ask questions using your voice.
-- **Text-to-Speech (TTS):** Advisor reads out strategic recommendations in natural audio with toggle controls.
-
-### D. Client-Side Official PDF Report Generator
-- 1-Click "Download Official PDF Report" button on both the Decision Engine and Health Dashboard.
-- Generates a vector PDF (`jspdf`) featuring official SRM SEEE letterhead, student details, metric breakdown table, mathematical formula proof, and signature fields for the Class Counselor and Head of Department.
-
----
-
-## 7. REST API Documentation
-
-Base URL: `http://127.0.0.1:8000` (or `http://127.0.0.1:5173/api` via Vite proxy)
-
-| Method | Endpoint | Phase | Description |
-| :--- | :--- | :---: | :--- |
-| `GET` | `/api/sections` | 1 | List all 10 available sections |
-| `GET` | `/api/sections/{id}/subjects` | 1 | Subject roster and faculty allocations |
-| `GET` | `/api/sections/{id}/timetable` | 1 | Weekly schedule grid (Periods 1 to 9) |
-| `POST` | `/api/attendance/calculate` | 1 | Core calculation engine (75%/90% bounds, safe skips) |
-| `POST` | `/api/attendance/plan` | 1 | Future date window planner |
-| `POST` | `/api/attendance/simulate` | 1 | What-If simulation slider endpoint |
-| `GET` | `/api/attendance/upcoming` | 1 | Chronological list of next scheduled classes |
-| `GET` | `/api/attendance/calendar` | 1 | Day-by-day semester calendar matrix |
-| `POST` | `/api/od/simulate` | 2 | On-Duty and Medical Leave impact simulator |
-| `POST` | `/api/chat/advisor` | 2 | Natural language AI Attendance Advisor |
-| `GET` | `/api/dashboard/{section_id}` | 2 | Cross-subject visual health analytics & charts |
-
----
-
-## 8. Automated Test Suite & Verification
-
-The application is protected by 27 comprehensive automated tests covering Phase 1, Phase 2, and Daily Marking logic:
+The project is backed by **33 automated tests** passing in `pytest`:
 
 ```bash
 python -m pytest backend/tests -v
-============================= 27 passed in 0.47s ==============================
+======================= 33 passed in 0.59s =======================
 ```
 
-- **Phase 1 Engine Tests (12 tests):** 100% attendance, exactly 75%, 74.9% boundary, 68% recoverable danger, 0% attendance, irreversible detention, 1 remaining class, 0 remaining classes, 90% unreachable, etc.
+- **Room Locator Round 2 Tests (6 tests):** All rooms listing, floor filtering, floor discovery, room schedule matrix, AI smart search query parsing, Call the Squad WhatsApp format validation.
+- **Attendance Engine Tests (12 tests):** 100% attendance, exactly 75%, boundary checks, recoverable danger, irreversible detention, safe misses, 90% unreachable, 0% attendance.
 - **Timetable Integrity Tests (5 tests):** 10 sections loaded, weekday-to-period matching, occurrence counts, calendar generation, future windowing.
-- **Phase 2 Service Tests (6 tests):** OD standard leave simulation, medical leave exemption policy, 3-day sick leave natural language query, safe skip query, target 90% query, multi-subject section dashboard aggregation.
-- **Daily Attendance & Leave Impact Tests (4 tests):** Day schedule extraction, weekend handling, leave period math, input validation error handling.
+- **Phase 2 Service Tests (6 tests):** OD simulation, medical exemption, AI advisor queries, multi-subject dashboard.
+- **Daily Attendance & Leave Impact Tests (4 tests):** Schedule extraction, weekend handling, leave period math, input validation.
 
 ---
 
-## 9. Judge Demonstration Script (Winning Hackathon Pitch)
+## 7. Judge Demonstration Script
 
-### Step 1: Overview & Problem Framing (0:00 - 0:30)
-1. Open `http://localhost:5173`. Point to the semester countdown (`62 days left`).
-2. Explain the fundamental flaw of university ERPs: they only show historical percentages, leaving students to discover detention when it is already too late.
+### Step 1: Round 2 — Free Class Locator & 3D Spatial Map (0:00 - 1:15)
+1. Open [**http://localhost:5173/locator**](http://localhost:5173/locator).
+2. Point out the **3D Interactive Building Map** showing all 7 floors of the IST Building.
+3. Toggle between **Isometric 3D**, **CAD Blueprint**, and **7-Floor Stack**.
+4. Test the **AI Room Finder** by clicking:
+   > *"I need an AC room on the ground floor for me and my team for the next 2 hours."*
+5. Show how IST 101 and 102 are surfaced with 99% match scores.
+6. Click **IST 101** to open the **Live Digital Countdown Clock** (`HH:MM:SS`).
+7. Click **"Call Squad on WhatsApp"** to show the generated message:
+   `📍 Heading to IST 101. It's free until 5:00 PM. Come fast!`
 
-### Step 2: The Core Decision Engine & PDF Download (0:30 - 1:15)
-1. Click **JUDGE DEMO** on the navbar and select **Scenario 1: 68% Danger Zone**.
-2. Show immediate results for `III ECE B` Discrete Mathematics:
-   - Current: 68.0% (17/25 attended).
-   - Verdict: Must attend **27 of 35 remaining classes**; can safely miss **8 classes**.
-   - Show the **Recovery Horizon Progress Gauge** and expand the **Mathematical Proof**.
-3. Click the glowing **"Download Official PDF Report"** button to generate the official printable compliance document.
+### Step 2: Round 1 — Attendance Predictor & Irreversible Detention (1:15 - 2:00)
+1. Navigate to [**http://localhost:5173/**](http://localhost:5173/) or click **"Judge Presets"** in the top navigation.
+2. Select **Scenario 1: 68% Danger Zone (Recoverable)**:
+   - Shows current 68.0% attendance.
+   - Shows required classes: 27 of 35 remaining.
+   - Shows safe misses: 8 classes.
+3. Select **Scenario 2: Irreversible Detention (Impossible)**:
+   - Triggers the loud red Irreversible Detention warning.
+   - Proves mathematically that even attending 100% of remaining classes yields max 50% $< 75%$.
+4. Click **"Download PDF"** to generate the official compliance report.
 
-### Step 3: Phase 2 Visual Health Dashboard (1:15 - 1:45)
-1. Click **Health Dashboard** in the navbar.
-2. Showcase the **Recharts Bar Chart** comparing all 9 courses in the section against the 75% Danger line and 90% Distinction line.
-3. Highlight the **Donut Health Spectrum** showing the section's risk distribution.
-
-### Step 4: Phase 2 The OD Simulator (1:45 - 2:15)
-1. Click **OD Simulator** in the navbar.
-2. Select preset: **"3 Days (Hackathon)"** from Oct 5 to Oct 7.
-3. Click **"Recalculate OD Impact"**:
-   - Total Approved Periods: **17 Periods**.
-   - Watch courses turn green with the badge: **🎉 RESCUED FROM DETENTION!**
-   - Show the pre-filled formal HOD application letter ready for submission.
-
-### Step 5: Phase 2 The AI Assistant with Voice Interaction (2:15 - 3:00)
-1. Click the glowing floating **AI Attendance Advisor** button in the bottom right corner.
-2. Click the quick prompt: *"If I take a 3-day sick leave starting tomorrow, will my attendance drop below 75%?"*
-3. The AI Advisor reads the timetable, runs the calculation engine, and responds with exact mathematical proof, showing the periods missed and strategic advice.
-4. Turn on the speaker icon to demonstrate **Voice Output (TTS)**, or click the microphone to ask a question via **Voice Input (STT)**.
+### Step 3: Phase 2 Innovations — OD Simulator & AI Voice Advisor (2:00 - 3:00)
+1. Navigate to **OD Simulator**: Select 3 days of hackathon leave; watch the attendance recover with the **🎉 RESCUED FROM DETENTION!** badge.
+2. Open the **AI Attendance Advisor**: Ask a query via text or voice, and hear the AI speak the mathematical proof aloud.
 
 ---
 
-## 10. Local Setup & Execution Guide
+## 8. Local Setup & Live Execution Guide
 
-### 1-Click Launch (Windows):
-Double click [`run_servers.bat`](file:///c:/intern/yuva/run_servers.bat) to launch both FastAPI and Vite.
+### Running Locally
 
-### Manual Commands:
 ```bash
-# Terminal 1 - Backend:
-pip install -r requirements.txt
+# Terminal 1: Backend API
 python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 
-# Terminal 2 - Frontend:
+# Terminal 2: Frontend App
 cd frontend
-npm install
 npm run dev
 ```
 
-- **Frontend App:** [http://127.0.0.1:5173](http://127.0.0.1:5173)
-- **Backend API:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
-- **Swagger Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **Test Suite:** `python -m pytest backend/tests -v` (23 passed)
+* **Frontend App:** [http://localhost:5173](http://localhost:5173)
+* **Round 2 Locator:** [http://localhost:5173/locator](http://localhost:5173/locator)
+* **Backend API Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
