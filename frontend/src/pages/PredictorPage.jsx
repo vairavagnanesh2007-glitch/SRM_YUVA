@@ -170,7 +170,7 @@ export default function PredictorPage({ presetScenario, onClearPreset }) {
   const calc = calculationResult?.calculation;
 
   return (
-    <div className="space-y-10 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="space-y-8 py-8 px-4 sm:px-6 lg:px-8 w-full max-w-[1550px] mr-auto">
       
       {/* Clean User-Friendly Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">

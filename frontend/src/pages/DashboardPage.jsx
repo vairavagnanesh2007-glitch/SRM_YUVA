@@ -105,8 +105,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1550px] mr-auto space-y-6">
         
         {/* Header (White Theme) */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-slate-200">

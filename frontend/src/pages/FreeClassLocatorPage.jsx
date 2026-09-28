@@ -15,10 +15,10 @@ import {
   Layers, 
   RefreshCw,
   CheckCircle2,
-  AlertCircle,
-  HelpCircle,
   ChevronRight,
-  ArrowRight
+  ArrowRight,
+  SlidersHorizontal,
+  X
 } from 'lucide-react';
 import { getRooms, getFloors, searchRoomsWithAI } from '../services/api';
 import Campus3DMap from '../components/Campus3DMap';
@@ -29,7 +29,7 @@ export default function FreeClassLocatorPage() {
   const [loading, setLoading] = useState(true);
   const [day, setDay] = useState('Monday');
   const [currentTime, setCurrentTime] = useState('13:30');
-  const [selectedFloor, setSelectedFloor] = useState(null); // null means All Floors
+  const [selectedFloor, setSelectedFloor] = useState(1); // Default to Ground Floor (Floor 1)
   const [activeTab, setActiveTab] = useState('3d'); // '3d' | 'grid'
   
   // AI Room Search state
@@ -43,16 +43,15 @@ export default function FreeClassLocatorPage() {
   // Filters for Grid view
   const [filterAC, setFilterAC] = useState(false);
   const [filterProjector, setFilterProjector] = useState(false);
-  const [statusFilter, setStatusFilter] = useState('ALL'); // 'ALL' | 'FREE' | 'ENDING_SOON' | 'OCCUPIED'
+  const [statusFilter, setStatusFilter] = useState('ALL');
 
   const samplePrompts = [
     "I need an AC room on the ground floor for me and my team for the next 2 hours.",
     "Quiet room on 5th floor with projector for 1 hour",
-    "Spacious room with AC for 50 people on 2nd floor",
+    "Classroom for 40 people with AC on 2nd floor",
     "Where can 4 students study silently right now?"
   ];
 
-  // Load rooms when day or currentTime or selectedFloor changes
   useEffect(() => {
     fetchRooms();
   }, [day, currentTime, selectedFloor]);
@@ -75,6 +74,10 @@ export default function FreeClassLocatorPage() {
     try {
       const res = await searchRoomsWithAI(queryText, day, currentTime);
       setAiResults(res);
+      // If AI detected a target floor, jump to it automatically
+      if (res?.parsedParams?.targetFloor) {
+        setSelectedFloor(res.parsedParams.targetFloor);
+      }
     } catch (err) {
       console.error("AI Search failed:", err);
     } finally {
@@ -87,18 +90,12 @@ export default function FreeClassLocatorPage() {
     handleAiSearch(prompt);
   };
 
-  const handleClearAiSearch = () => {
-    setAiQuery('');
-    setAiResults(null);
-  };
-
   // Summary counts
   const totalRooms = rooms.length;
   const freeRooms = rooms.filter(r => r.status === 'FREE').length;
   const endingSoonRooms = rooms.filter(r => r.status === 'ENDING_SOON').length;
   const occupiedRooms = rooms.filter(r => r.status === 'OCCUPIED').length;
 
-  // Filtered rooms for grid view
   const filteredRooms = rooms.filter(r => {
     if (statusFilter !== 'ALL' && r.status !== statusFilter) return false;
     if (filterAC && !r.hasAC) return false;
@@ -107,61 +104,68 @@ export default function FreeClassLocatorPage() {
   });
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
-      {/* TOP HERO & HEADER */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-xs relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-gradient-to-br from-indigo-100/40 via-sky-50/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+    <div className="w-full text-slate-900 px-4 sm:px-6 lg:px-8 py-6">
+      
+      {/* LEFT-ALIGNED 2-COLUMN DESKTOP ARRANGEMENT */}
+      <div className="flex flex-col lg:flex-row items-start gap-8">
         
-        <div className="flex flex-wrap items-center justify-between gap-6 relative z-10">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Round 2 Official Feature: The Free Class Locator</span>
+        {/* LEFT COLUMN: COMMAND BAR & FILTERS (LEFT-ANCHORED) */}
+        <aside className="w-full lg:w-[380px] shrink-0 space-y-5">
+          
+          {/* Page Header */}
+          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-semibold mb-2">
+              <Sparkles className="w-3 h-3" />
+              <span>Round 2 • Free Class Locator</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Live Classroom Locator & 3D Spatial Map
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+              Classroom Locator
             </h1>
-            <p className="text-sm sm:text-base text-slate-500 mt-2 leading-relaxed">
-              Find unoccupied classrooms across all 7 floors of the IST Building, mapped dynamically against all 10 SRM department timetables. Features AI smart search, live countdown timers, and 1-click WhatsApp squad summoning.
+            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+              Find open study spaces in the IST Building mapped dynamically against all 10 SRM timetables.
             </p>
+
+            {/* Quick Metrics Strip */}
+            <div className="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-slate-100 text-center">
+              <div className="bg-emerald-50/70 border border-emerald-200/80 p-2 rounded-xl">
+                <div className="text-lg font-bold text-emerald-700">{freeRooms}</div>
+                <div className="text-[10px] font-semibold text-emerald-800 uppercase">🟢 Free Now</div>
+              </div>
+              <div className="bg-amber-50/70 border border-amber-200/80 p-2 rounded-xl">
+                <div className="text-lg font-bold text-amber-700">{endingSoonRooms}</div>
+                <div className="text-[10px] font-semibold text-amber-800 uppercase">🟡 Soon</div>
+              </div>
+              <div className="bg-slate-50 border border-slate-200 p-2 rounded-xl">
+                <div className="text-lg font-bold text-slate-700">{occupiedRooms}</div>
+                <div className="text-[10px] font-semibold text-slate-600 uppercase">🔴 Busy</div>
+              </div>
+            </div>
           </div>
 
-          {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
-            <div className="bg-slate-50 border border-slate-200/60 p-3.5 rounded-2xl text-center min-w-[100px]">
-              <div className="text-2xl font-extrabold text-slate-900">{totalRooms}</div>
-              <div className="text-[11px] font-medium text-slate-500 uppercase tracking-wider mt-0.5">Total Rooms</div>
+          {/* Time & Day Controls */}
+          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-indigo-600" />
+                Schedule Context
+              </span>
+              <button
+                onClick={fetchRooms}
+                className="text-xs text-slate-500 hover:text-slate-900 flex items-center gap-1"
+                title="Refresh rooms"
+              >
+                <RefreshCw className="w-3 h-3" />
+                <span>Refresh</span>
+              </button>
             </div>
-            <div className="bg-emerald-50/80 border border-emerald-200 p-3.5 rounded-2xl text-center min-w-[100px]">
-              <div className="text-2xl font-extrabold text-emerald-700">{freeRooms}</div>
-              <div className="text-[11px] font-semibold text-emerald-700 uppercase tracking-wider mt-0.5">🟢 Free Now</div>
-            </div>
-            <div className="bg-amber-50/80 border border-amber-200 p-3.5 rounded-2xl text-center min-w-[100px]">
-              <div className="text-2xl font-extrabold text-amber-700">{endingSoonRooms}</div>
-              <div className="text-[11px] font-semibold text-amber-700 uppercase tracking-wider mt-0.5">🟡 Ending Soon</div>
-            </div>
-            <div className="bg-rose-50/60 border border-rose-200 p-3.5 rounded-2xl text-center min-w-[100px]">
-              <div className="text-2xl font-extrabold text-rose-700">{occupiedRooms}</div>
-              <div className="text-[11px] font-semibold text-rose-700 uppercase tracking-wider mt-0.5">🔴 Occupied</div>
-            </div>
-          </div>
-        </div>
-
-        {/* TIME & DAY SIMULATION CONTROLS */}
-        <div className="mt-6 pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-indigo-600" />
-              Simulate Time & Day:
-            </span>
 
             {/* Day Selector */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+            <div className="grid grid-cols-5 gap-1 bg-slate-100 p-1 rounded-xl text-center">
               {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(d => (
                 <button
                   key={d}
                   onClick={() => setDay(d)}
-                  className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+                  className={`py-1 rounded-lg text-xs font-semibold transition-all ${
                     day === d
                       ? 'bg-white text-slate-900 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
@@ -172,238 +176,157 @@ export default function FreeClassLocatorPage() {
               ))}
             </div>
 
-            {/* Time Selector */}
-            <div className="flex items-center gap-2">
-              <select
-                value={currentTime}
-                onChange={(e) => setCurrentTime(e.target.value)}
-                className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-800 shadow-xs focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
-              >
-                <option value="09:15">09:15 AM (Period 1)</option>
-                <option value="10:15">10:15 AM (Period 2)</option>
-                <option value="11:15">11:15 AM (Period 3)</option>
-                <option value="12:00">12:00 PM (Period 4)</option>
-                <option value="12:45">12:45 PM (Lunch Break)</option>
-                <option value="13:30">01:30 PM (Period 6)</option>
-                <option value="14:30">02:30 PM (Period 7)</option>
-                <option value="15:30">03:30 PM (Period 8)</option>
-                <option value="16:15">04:15 PM (Period 9)</option>
-              </select>
+            {/* Time Selector Dropdown */}
+            <select
+              value={currentTime}
+              onChange={(e) => setCurrentTime(e.target.value)}
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+            >
+              <option value="09:15">09:15 AM (Period 1)</option>
+              <option value="10:15">10:15 AM (Period 2)</option>
+              <option value="11:15">11:15 AM (Period 3)</option>
+              <option value="12:00">12:00 PM (Period 4)</option>
+              <option value="12:45">12:45 PM (Lunch Break)</option>
+              <option value="13:30">01:30 PM (Period 6)</option>
+              <option value="14:30">02:30 PM (Period 7)</option>
+              <option value="15:30">03:30 PM (Period 8)</option>
+              <option value="16:15">04:15 PM (Period 9)</option>
+            </select>
+          </div>
+
+          {/* AI Room Finder Panel */}
+          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                  <Sparkles className="w-3.5 h-3.5" />
+                </div>
+                <h3 className="font-bold text-slate-900 text-xs">AI Smart Room Finder</h3>
+              </div>
+              {aiResults && (
+                <button
+                  onClick={() => { setAiQuery(''); setAiResults(null); }}
+                  className="text-[11px] text-slate-400 hover:text-slate-700"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            <form
+              onSubmit={(e) => { e.preventDefault(); handleAiSearch(); }}
+              className="space-y-2"
+            >
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={aiQuery}
+                  onChange={(e) => setAiQuery(e.target.value)}
+                  placeholder="e.g. AC room on ground floor for 2 hours..."
+                  className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+                />
+              </div>
 
               <button
-                onClick={fetchRooms}
-                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
-                title="Refresh Room Status"
+                type="submit"
+                disabled={aiSearching || !aiQuery.trim()}
+                className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-semibold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
               >
-                <RefreshCw className="w-4 h-4" />
+                {aiSearching ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    <span>Searching...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Search With AI</span>
+                  </>
+                )}
               </button>
-            </div>
-          </div>
+            </form>
 
-          {/* VIEW SWITCHER: 3D MAP vs FLOOR GRID */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
-            <button
-              onClick={() => setActiveTab('3d')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === '3d'
-                  ? 'bg-white text-indigo-700 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Compass className="w-4 h-4 text-indigo-600" />
-              <span>3D Spatial Map</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('grid')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'grid'
-                  ? 'bg-white text-indigo-700 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Layers className="w-4 h-4 text-indigo-600" />
-              <span>Floor Grid Manager</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* AI ROOM FINDER SEARCH BAR (PHASE 1 REQUIREMENT) */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-900 text-sm">The AI Room Finder</h3>
-              <p className="text-xs text-slate-500">Describe what you need in plain English</p>
-            </div>
-          </div>
-          {aiResults && (
-            <button
-              onClick={handleClearAiSearch}
-              className="text-xs text-indigo-600 hover:text-indigo-800 font-semibold"
-            >
-              Reset Search
-            </button>
-          )}
-        </div>
-
-        {/* Input & Search Button */}
-        <form 
-          onSubmit={(e) => { e.preventDefault(); handleAiSearch(); }}
-          className="flex flex-col sm:flex-row items-center gap-2"
-        >
-          <div className="relative w-full">
-            <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={aiQuery}
-              onChange={(e) => setAiQuery(e.target.value)}
-              placeholder='e.g. "I need an AC room on the ground floor for me and my team for the next 2 hours."'
-              className="w-full pl-11 pr-4 py-3 bg-slate-50/70 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden transition-all"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={aiSearching || !aiQuery.trim()}
-            className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap shadow-xs flex items-center justify-center gap-2"
-          >
-            {aiSearching ? (
-              <>
-                <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Finding Rooms...</span>
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-4 h-4" />
-                <span>Find Room</span>
-              </>
-            )}
-          </button>
-        </form>
-
-        {/* Clickable Prompt Suggestion Chips */}
-        <div className="flex flex-wrap items-center gap-2 pt-1">
-          <span className="text-xs font-semibold text-slate-400 mr-1">Try asking:</span>
-          {samplePrompts.map((p, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleQuickPrompt(p)}
-              className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-indigo-50/70 border border-slate-200/80 hover:border-indigo-200 text-[11px] font-medium text-slate-700 hover:text-indigo-800 transition-all text-left"
-            >
-              "{p}"
-            </button>
-          ))}
-        </div>
-
-        {/* AI SEARCH RESULTS DRAWER */}
-        {aiResults && (
-          <div className="mt-4 p-5 rounded-2xl bg-indigo-50/40 border border-indigo-100 space-y-4 animate-in fade-in duration-200">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-100 pb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-indigo-900">
-                  AI Match Results ({aiResults.matchCount} Rooms Found)
-                </span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-semibold">
-                  Required: {aiResults.parsedParams.durationHours}h ({aiResults.parsedParams.requiredMinutes} mins)
-                </span>
-              </div>
-              <div className="text-xs text-slate-500">
-                Filters detected: {aiResults.parsedParams.requiresAC ? '❄️ AC ' : ''}{aiResults.parsedParams.requiresProjector ? '📽️ Projector ' : ''}{aiResults.parsedParams.targetFloor ? `🏢 Floor ${aiResults.parsedParams.targetFloor}` : ''}
-              </div>
-            </div>
-
-            {aiResults.topMatches.length === 0 ? (
-              <div className="p-6 text-center text-slate-500 text-xs">
-                No rooms match all criteria right now. Try lowering duration or removing floor constraints.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {aiResults.topMatches.map((room) => (
-                  <div
-                    key={room.id}
-                    onClick={() => setSelectedRoom(room)}
-                    className="p-4 rounded-xl bg-white border border-indigo-200 hover:border-indigo-500 hover:shadow-md cursor-pointer transition-all group"
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-bold text-slate-900 text-base group-hover:text-indigo-600 transition-colors">
-                            {room.name}
-                          </span>
-                          <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
-                            {room.floorLabel}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-500 line-clamp-1">{room.type}</p>
-                      </div>
-
-                      <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">
-                        {room.matchScore}% Match
-                      </span>
-                    </div>
-
-                    <div className="text-xs text-slate-600 my-2 line-clamp-2 bg-slate-50 p-2 rounded-lg border border-slate-100 font-sans">
-                      {room.matchReason}
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-100">
-                      <span className="font-semibold text-emerald-700">
-                        Free until {room.freeUntil}
-                      </span>
-                      <span className="text-indigo-600 group-hover:translate-x-1 transition-transform font-medium flex items-center text-[11px]">
-                        Call Squad <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* MAIN VIEWPORT: 3D MAP OR FLOOR GRID */}
-      {activeTab === '3d' ? (
-        <Campus3DMap
-          rooms={rooms}
-          selectedFloor={selectedFloor}
-          onSelectFloor={setSelectedFloor}
-          onSelectRoom={setSelectedRoom}
-        />
-      ) : (
-        /* FLOOR GRID VIEW */
-        <div className="space-y-6">
-          {/* Floor & Amenity Filter Toolbar */}
-          <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-4">
-            {/* Status Pills */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-slate-400 mr-1">Status:</span>
-              {[
-                { id: 'ALL', label: 'All Rooms' },
-                { id: 'FREE', label: '🟢 Free' },
-                { id: 'ENDING_SOON', label: '🟡 Ending Soon' },
-                { id: 'OCCUPIED', label: '🔴 Occupied' }
-              ].map(s => (
+            {/* Prompt Chips */}
+            <div className="space-y-1 pt-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                Quick Prompts:
+              </span>
+              {samplePrompts.slice(0, 2).map((p, idx) => (
                 <button
-                  key={s.id}
-                  onClick={() => setStatusFilter(s.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                    statusFilter === s.id
-                      ? 'bg-slate-900 text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
+                  key={idx}
+                  onClick={() => handleQuickPrompt(p)}
+                  className="w-full text-left p-2 rounded-lg bg-slate-50 hover:bg-indigo-50/60 border border-slate-100 hover:border-indigo-200 text-[11px] text-slate-700 transition-colors line-clamp-1"
                 >
-                  {s.label}
+                  "{p}"
                 </button>
               ))}
             </div>
 
-            {/* Amenity Checkboxes & Floor Dropdown */}
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-1.5 text-xs text-slate-700 font-medium cursor-pointer">
+            {/* AI Results Drawer */}
+            {aiResults && (
+              <div className="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 text-xs space-y-2 mt-2">
+                <div className="flex items-center justify-between font-semibold text-indigo-900 text-[11px]">
+                  <span>Matches: {aiResults.matchCount} Rooms</span>
+                  <span>{aiResults.parsedParams.durationHours}h Req</span>
+                </div>
+                <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                  {aiResults.topMatches.map(r => (
+                    <div
+                      key={r.id}
+                      onClick={() => setSelectedRoom(r)}
+                      className="p-2 bg-white rounded-lg border border-indigo-200 hover:border-indigo-400 cursor-pointer transition-all flex items-center justify-between text-xs"
+                    >
+                      <div>
+                        <span className="font-bold text-slate-900">{r.name}</span>
+                        <span className="text-[10px] text-slate-500 ml-1.5">({r.floorLabel})</span>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+                        {r.matchScore}% Match
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Floor & Filter Preferences */}
+          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+              Floor & Amenities
+            </span>
+
+            {/* Floor Selection Buttons */}
+            <div className="grid grid-cols-4 gap-1.5">
+              {[1, 2, 3, 4, 5, 6, 7].map(f => (
+                <button
+                  key={f}
+                  onClick={() => setSelectedFloor(f)}
+                  className={`py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    selectedFloor === f
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
+                  }`}
+                >
+                  {f === 1 ? 'GF' : `${f}F`}
+                </button>
+              ))}
+              <button
+                onClick={() => setSelectedFloor(null)}
+                className={`py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  selectedFloor === null
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
+                }`}
+              >
+                All
+              </button>
+            </div>
+
+            {/* Amenity Checkboxes */}
+            <div className="pt-2 border-t border-slate-100 flex items-center gap-4 text-xs font-medium text-slate-700">
+              <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filterAC}
@@ -413,7 +336,7 @@ export default function FreeClassLocatorPage() {
                 <span>AC Only</span>
               </label>
 
-              <label className="flex items-center gap-1.5 text-xs text-slate-700 font-medium cursor-pointer">
+              <label className="flex items-center gap-1.5 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filterProjector}
@@ -422,143 +345,117 @@ export default function FreeClassLocatorPage() {
                 />
                 <span>Projector</span>
               </label>
-
-              <select
-                value={selectedFloor || ''}
-                onChange={(e) => setSelectedFloor(e.target.value ? parseInt(e.target.value) : null)}
-                className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-800 shadow-xs focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
-              >
-                <option value="">All Floors</option>
-                <option value="1">Ground Floor (1F)</option>
-                <option value="2">2nd Floor (2F)</option>
-                <option value="3">3rd Floor (3F)</option>
-                <option value="4">4th Floor (4F)</option>
-                <option value="5">5th Floor (5F)</option>
-                <option value="6">6th Floor (6F)</option>
-                <option value="7">7th Floor (7F)</option>
-              </select>
             </div>
           </div>
+        </aside>
 
-          {/* Room Grid Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filteredRooms.map((room) => {
-              const isFree = room.status === 'FREE';
-              const isEndingSoon = room.status === 'ENDING_SOON';
+        {/* RIGHT COLUMN: MAIN CANVAS (3D SPATIAL MODEL & TIMETABLE GRID) */}
+        <main className="flex-1 w-full space-y-5">
+          
+          {/* View Switcher Header */}
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-400">View Mode:</span>
+              <button
+                onClick={() => setActiveTab('3d')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  activeTab === '3d'
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 bg-slate-100'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5 text-indigo-400" />
+                <span>3D Spatial Building Map</span>
+              </button>
 
-              return (
-                <div
-                  key={room.id}
-                  onClick={() => setSelectedRoom(room)}
-                  className={`bg-white rounded-2xl border p-5 transition-all duration-200 hover:shadow-md cursor-pointer flex flex-col justify-between ${
-                    isFree 
-                      ? 'border-emerald-200 hover:border-emerald-400' 
-                      : isEndingSoon 
-                      ? 'border-amber-200 hover:border-amber-400' 
-                      : 'border-slate-200 hover:border-slate-300 opacity-90 hover:opacity-100'
-                  }`}
-                >
-                  <div>
-                    {/* Header */}
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <h4 className="font-bold text-slate-900 text-lg group-hover:text-indigo-600">
-                            {room.name}
-                          </h4>
-                          <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-                            {room.floorLabel}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-500 mt-0.5">{room.type}</p>
-                      </div>
+              <button
+                onClick={() => setActiveTab('grid')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  activeTab === 'grid'
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 bg-slate-100'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Floor Timetable Grid</span>
+              </button>
+            </div>
 
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
-                        isFree 
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-                          : isEndingSoon 
-                          ? 'bg-amber-50 text-amber-700 border-amber-200 animate-pulse'
-                          : 'bg-rose-50 text-rose-700 border-rose-200'
-                      }`}>
-                        {isFree ? '🟢 Free' : isEndingSoon ? '🟡 Ending Soon' : '🔴 Occupied'}
-                      </span>
-                    </div>
-
-                    {/* Room Amenities */}
-                    <div className="flex items-center gap-3 text-xs text-slate-600 my-3 py-2 border-y border-slate-100">
-                      <div className="flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{room.capacity} seats</span>
-                      </div>
-                      {room.hasAC && (
-                        <div className="flex items-center gap-1 text-sky-600 font-medium">
-                          <Wind className="w-3.5 h-3.5" />
-                          <span>AC</span>
-                        </div>
-                      )}
-                      {room.hasProjector && (
-                        <div className="flex items-center gap-1 text-indigo-600">
-                          <Tv className="w-3.5 h-3.5" />
-                          <span>Projector</span>
-                        </div>
-                      )}
-                      <div className="flex items-center gap-1 text-slate-500 ml-auto">
-                        <Volume2 className="w-3.5 h-3.5 text-slate-400" />
-                        <span>{room.quietRating} Quiet</span>
-                      </div>
-                    </div>
-
-                    {/* Status Info */}
-                    <div className="text-xs space-y-1 my-2">
-                      {isFree ? (
-                        <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                          <Clock className="w-4 h-4 text-emerald-600" />
-                          <span>Free for {room.countdownText} (until {room.freeUntil})</span>
-                        </div>
-                      ) : isEndingSoon ? (
-                        <div className="flex items-center gap-1.5 text-amber-700 font-bold">
-                          <Clock className="w-4 h-4 text-amber-600 animate-spin" />
-                          <span>Only {room.countdownText} left until class starts!</span>
-                        </div>
-                      ) : (
-                        <div className="text-slate-500">
-                          In use until <span className="font-semibold text-slate-700">{room.freeUntil}</span>
-                          {room.currentBooking && (
-                            <div className="text-[11px] text-slate-400 mt-0.5">
-                              {room.currentBooking.section} ({room.currentBooking.subjectCode})
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Actions Bar */}
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[11px] text-indigo-600 font-semibold flex items-center gap-1 hover:underline">
-                      <Clock className="w-3.5 h-3.5" />
-                      Live Countdown & Squad
-                    </span>
-
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedRoom(room);
-                      }}
-                      className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-semibold transition-colors flex items-center gap-1"
-                    >
-                      <span>Inspect</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+            <span className="text-xs text-slate-400 font-mono">
+              IST Building • Day: {day}
+            </span>
           </div>
-        </div>
-      )}
 
-      {/* POPUP ROOM COUNTDOWN & CALL THE SQUAD MODAL */}
+          {/* VIEW: 3D MODEL */}
+          {activeTab === '3d' ? (
+            <Campus3DMap
+              rooms={rooms}
+              selectedFloor={selectedFloor}
+              onSelectFloor={setSelectedFloor}
+              onSelectRoom={setSelectedRoom}
+            />
+          ) : (
+            /* VIEW: FLOOR TIMETABLE GRID */
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {filteredRooms.map(room => {
+                const isFree = room.status === 'FREE';
+                const isEndingSoon = room.status === 'ENDING_SOON';
+
+                return (
+                  <div
+                    key={room.id}
+                    onClick={() => setSelectedRoom(room)}
+                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 shadow-xs hover:shadow-sm cursor-pointer transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-bold text-slate-900 text-base">{room.name}</h4>
+                          <span className="text-[11px] text-slate-500">{room.floorLabel} • {room.capacity} seats</span>
+                        </div>
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                          isFree
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : isEndingSoon
+                            ? 'bg-amber-100 text-amber-800'
+                            : 'bg-slate-100 text-slate-700'
+                        }`}>
+                          {isFree ? '🟢 Free' : isEndingSoon ? '🟡 Soon' : '🔴 Busy'}
+                        </span>
+                      </div>
+
+                      <div className="text-xs text-slate-600 my-2">
+                        {isFree ? (
+                          <div className="font-semibold text-emerald-700 flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>Free until {room.freeUntil}</span>
+                          </div>
+                        ) : isEndingSoon ? (
+                          <div className="font-bold text-amber-700 flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>Ending in {room.countdownText}!</span>
+                          </div>
+                        ) : (
+                          <div className="text-slate-500">
+                            Booked until {room.freeUntil}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-indigo-600 font-semibold">
+                      <span>Inspect Room</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </main>
+      </div>
+
+      {/* POPUP ROOM COUNTDOWN & WHATSAPP SQUAD MODAL */}
       {selectedRoom && (
         <RoomCountdownModal
           room={selectedRoom}
