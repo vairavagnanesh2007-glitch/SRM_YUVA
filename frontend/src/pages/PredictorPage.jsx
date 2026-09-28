@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { 
   getSections, 
   getSectionSubjects, 
@@ -10,9 +10,6 @@ import RecoveryGauge from '../components/RecoveryGauge';
 import MathematicalProof from '../components/MathematicalProof';
 import ComparisonCard from '../components/ComparisonCard';
 import WhatIfSimulator from '../components/WhatIfSimulator';
-import UpcomingClasses from '../components/UpcomingClasses';
-import AttendanceCalendar from '../components/AttendanceCalendar';
-import SemesterTimeline from '../components/SemesterTimeline';
 import { 
   Calculator, 
   Calendar as CalendarIcon, 
@@ -36,6 +33,7 @@ import { exportAttendanceReportPDF } from '../utils/pdfExport';
 
 export default function PredictorPage({ presetScenario, onClearPreset }) {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const urlSection = searchParams.get('section');
   const urlSubject = searchParams.get('subject');
 
@@ -570,21 +568,32 @@ export default function PredictorPage({ presetScenario, onClearPreset }) {
             calculation={calc} 
           />
 
-          {/* Upcoming Real Timetable Classes */}
-          <UpcomingClasses 
-            classes={calculationResult.upcomingClasses} 
-            subjectName={calculationResult.subject?.name}
-            subjectCode={calculationResult.subject?.code}
-          />
+          {/* Class Schedule & Timetable Portal Card */}
+          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
+                  Timetable Explorer Portal
+                </span>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  Official Class Timetables
+                </span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg mt-1">Class Schedule & Timings</h3>
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                Chronological class schedules, period timings (P1–P9), and semester calendar dates are organized in the dedicated Timetable Portal.
+              </p>
+            </div>
 
-          {/* Full Interactive Semester Calendar */}
-          <AttendanceCalendar 
-            calendarDays={calculationResult.calendar} 
-            calculation={calc} 
-          />
-
-          {/* Semester Timeline */}
-          <SemesterTimeline timeline={calculationResult.timeline} />
+            <button
+              onClick={() => navigate(`/timetable?section=${encodeURIComponent(selectedSection)}`)}
+              className="mobbin-btn-primary shrink-0 flex items-center gap-2"
+            >
+              <CalendarIcon className="w-3.5 h-3.5" />
+              <span>Open Timetable Portal</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
 
         </section>
       )}
