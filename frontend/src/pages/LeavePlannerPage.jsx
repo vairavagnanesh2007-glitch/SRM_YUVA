@@ -351,8 +351,9 @@ export default function LeavePlannerPage() {
               </div>
 
               {impactData.affectedSubjects?.length === 0 ? (
-                <div className="p-8 text-center text-slate-500 text-xs">
-                  🎉 No scheduled classes fall within this date range. Your attendance will remain completely unaffected!
+                <div className="p-8 text-center text-slate-500 text-xs flex items-center justify-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>No scheduled classes fall within this date range. Your attendance will remain completely unaffected!</span>
                 </div>
               ) : (
                 <div className="overflow-x-auto">

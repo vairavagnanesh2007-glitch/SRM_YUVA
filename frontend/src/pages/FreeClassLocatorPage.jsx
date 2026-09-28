@@ -129,15 +129,24 @@ export default function FreeClassLocatorPage() {
             <div className="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-slate-100 text-center">
               <div className="bg-emerald-50/70 border border-emerald-200/80 p-2 rounded-xl">
                 <div className="text-lg font-bold text-emerald-700">{freeRooms}</div>
-                <div className="text-[10px] font-semibold text-emerald-800 uppercase">🟢 Free Now</div>
+                <div className="text-[10px] font-semibold text-emerald-800 uppercase flex items-center justify-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span>Free Now</span>
+                </div>
               </div>
               <div className="bg-amber-50/70 border border-amber-200/80 p-2 rounded-xl">
                 <div className="text-lg font-bold text-amber-700">{endingSoonRooms}</div>
-                <div className="text-[10px] font-semibold text-amber-800 uppercase">🟡 Soon</div>
+                <div className="text-[10px] font-semibold text-amber-800 uppercase flex items-center justify-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                  <span>Soon</span>
+                </div>
               </div>
               <div className="bg-slate-50 border border-slate-200 p-2 rounded-xl">
                 <div className="text-lg font-bold text-slate-700">{occupiedRooms}</div>
-                <div className="text-[10px] font-semibold text-slate-600 uppercase">🔴 Busy</div>
+                <div className="text-[10px] font-semibold text-slate-600 uppercase flex items-center justify-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                  <span>Busy</span>
+                </div>
               </div>
             </div>
           </div>
@@ -413,14 +422,17 @@ export default function FreeClassLocatorPage() {
                           <h4 className="font-bold text-slate-900 text-base">{room.name}</h4>
                           <span className="text-[11px] text-slate-500">{room.floorLabel} • {room.capacity} seats</span>
                         </div>
-                        <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                           isFree
                             ? 'bg-emerald-100 text-emerald-800'
                             : isEndingSoon
                             ? 'bg-amber-100 text-amber-800'
                             : 'bg-slate-100 text-slate-700'
                         }`}>
-                          {isFree ? '🟢 Free' : isEndingSoon ? '🟡 Soon' : '🔴 Busy'}
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            isFree ? 'bg-emerald-500' : isEndingSoon ? 'bg-amber-500 animate-pulse' : 'bg-rose-400'
+                          }`} />
+                          <span>{isFree ? 'Available' : isEndingSoon ? 'Ending Soon' : 'In Session'}</span>
                         </span>
                       </div>
 

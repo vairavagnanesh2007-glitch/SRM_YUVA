@@ -126,13 +126,13 @@ export default function RecoveryGauge({ calculation }) {
         <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
           <span className="text-slate-500 block text-[11px] font-medium">75% Goal</span>
           <span className={`font-mono text-xs font-bold block mt-1 ${isImpossible75 ? 'text-rose-600' : 'text-emerald-700'}`}>
-            {isImpossible75 ? '❌ UNREACHABLE' : `Attend ${calculation.target75?.requiredToAttend} more`}
+            {isImpossible75 ? 'UNREACHABLE' : `Attend ${calculation.target75?.requiredToAttend} more`}
           </span>
         </div>
         <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
           <span className="text-slate-500 block text-[11px] font-medium">90% Goal</span>
           <span className={`font-mono text-xs font-bold block mt-1 ${isImpossible90 ? 'text-amber-700' : 'text-emerald-700'}`}>
-            {isImpossible90 ? '⚠️ UNREACHABLE' : `Attend ${calculation.target90?.requiredToAttend} more`}
+            {isImpossible90 ? 'UNREACHABLE' : `Attend ${calculation.target90?.requiredToAttend} more`}
           </span>
         </div>
       </div>

@@ -412,7 +412,7 @@ class RoomLocatorService:
                 "minutesLeft": minutes_left,
                 "secondsLeft": minutes_left * 60,
                 "countdownText": f"{minutes_left // 60}h {minutes_left % 60}m" if minutes_left >= 60 else f"{minutes_left}m",
-                "squadMessage": f"📍 Heading to {room['name']}. It's free until {display_free_until}. Come fast!"
+                "squadMessage": f"Heading to {room['name']}. It's free until {display_free_until}. Come fast!"
             })
 
         return results

@@ -368,23 +368,23 @@ export const fallbackAskAdvisor = (payload) => {
 
   let advice = "";
   if (q.includes("sick") || q.includes("medical") || q.includes("leave")) {
-    advice = `### 🩺 Medical Leave Attendance Analysis
+    advice = `### Medical Leave Attendance Analysis
 Based on the schedule for **${sectionId}**:
 - Missing **3 days** of classes accounts for approximately **12 to 15 contact periods**.
 - If your current attendance is above **80%**, your attendance will drop by approximately **3.5%**, remaining comfortably above the **75% detention threshold**.
 - **Action Required:** Ensure you submit a certified medical fitness certificate within 3 days of return to apply for Medical Leave exemption.`;
   } else if (q.includes("od") || q.includes("hackathon") || q.includes("on duty")) {
-    advice = `### 🏆 On-Duty (OD) Simulation Result
+    advice = `### On-Duty (OD) Simulation Result
 - Participating in the **Hackathon** will impact approximately **17 contact periods**.
 - Under the university's Credit Policy, having your OD approved will convert missed classes into **Attended Credits**.
 - This rescues at-risk subjects and boosts your final projected standing back above 75%.`;
   } else if (q.includes("skip") || q.includes("miss") || q.includes("safe")) {
-    advice = `### 🛡️ Safe Miss Limit Calculation
+    advice = `### Safe Miss Limit Calculation
 - For course **${subjectCode}**, you currently have **8 safe classes left to miss** before hitting 75%.
 - To achieve **90% distinction**, you can safely miss only **2 classes**.
 - Always keep an emergency buffer of at least 2 skips for unexpected illnesses.`;
   } else {
-    advice = `### 📊 Real-Time Attendance Intelligence
+    advice = `### Real-Time Attendance Intelligence
 - Section **${sectionId}** has **62 days remaining** in the semester.
 - All 10 section timetables are actively monitored against the **75% minimum threshold** and **90% target**.
 - Use the **What-If Simulator** or **Leave Planner** on the dashboard to test your custom scenarios.`;
@@ -677,7 +677,7 @@ export const fallbackGetRooms = (day = "Monday", currentTimeStr = "13:30", floor
       minutesLeft,
       secondsLeft: minutesLeft * 60,
       countdownText: minutesLeft >= 60 ? `${Math.floor(minutesLeft / 60)}h ${minutesLeft % 60}m` : `${minutesLeft}m`,
-      squadMessage: `📍 Heading to ${room.name}. It's free until ${displayFreeUntil}. Come fast!`
+      squadMessage: `Heading to ${room.name}. It's free until ${displayFreeUntil}. Come fast!`
     };
   });
 };

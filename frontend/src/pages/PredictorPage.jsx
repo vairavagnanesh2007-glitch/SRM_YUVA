@@ -449,7 +449,7 @@ export default function PredictorPage({ presetScenario, onClearPreset }) {
                     CRITICAL WARNING: DETENTION THRESHOLD VIOLATION
                   </span>
                   <h2 className="text-xl sm:text-2xl font-extrabold text-rose-950">
-                    🚨 IRREVERSIBLE DETENTION
+                    IRREVERSIBLE DETENTION DETECTED
                   </h2>
                 </div>
               </div>

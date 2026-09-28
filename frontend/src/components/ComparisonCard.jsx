@@ -44,7 +44,10 @@ export default function ComparisonCard({ comparison, calculation }) {
           </div>
 
           <div className="text-xs text-slate-600 space-y-1.5 border-t border-slate-200 pt-3">
-            <p className="text-rose-700 font-semibold">⚠️ Passive historical reporting.</p>
+            <p className="text-rose-700 font-semibold flex items-center gap-1.5">
+              <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+              <span>Passive historical reporting.</span>
+            </p>
             <p>Students must manually guess whether they can skip a lecture, or discover detention when it's already too late.</p>
           </div>
         </div>
@@ -76,7 +79,10 @@ export default function ComparisonCard({ comparison, calculation }) {
           </div>
 
           <div className="text-xs text-slate-700 space-y-1.5 border-t border-emerald-200 pt-3">
-            <p className="text-emerald-800 font-bold">🛡️ Proactive forward decision engine.</p>
+            <p className="text-emerald-800 font-bold flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+              <span>Proactive forward decision engine.</span>
+            </p>
             <p>Knows exact scheduled dates, informs students precisely what to attend and what can be safely missed without detention.</p>
           </div>
         </div>

@@ -334,8 +334,9 @@ export default function ODSimulatorPage() {
                             Slot {subj.slot || '-'}
                           </span>
                           {isRescued && (
-                            <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-300 animate-pulse">
-                              🎉 RESCUED FROM DETENTION!
+                            <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-300 flex items-center gap-1">
+                              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                              <span>RESCUED FROM DETENTION</span>
                             </span>
                           )}
                         </div>

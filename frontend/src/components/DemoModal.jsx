@@ -22,7 +22,7 @@ export default function DemoModal({ isOpen, onClose, onSelectScenario }) {
     },
     {
       id: "irreversible_detention",
-      title: "Scenario 2: 🚨 Irreversible Detention (Impossible)",
+      title: "Scenario 2: Irreversible Detention (Impossible)",
       badge: "IRREVERSIBLE DETENTION",
       badgeColor: "bg-rose-50 text-rose-800 border-rose-300 font-bold",
       icon: Skull,
@@ -67,7 +67,7 @@ export default function DemoModal({ isOpen, onClose, onSelectScenario }) {
     },
     {
       id: "round2_room_locator",
-      title: "Scenario 5: 📍 Round 2 — Free Class Locator & 3D Map",
+      title: "Scenario 5: Round 2 — Free Class Locator & 3D Map",
       badge: "ROUND 2 OFFICIAL",
       badgeColor: "bg-indigo-50 text-indigo-800 border-indigo-300 font-bold",
       icon: Sparkles,
