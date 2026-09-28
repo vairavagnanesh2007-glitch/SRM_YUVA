@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, CheckCircle2, XCircle, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCircle2, XCircle, Sparkles, AlertTriangle, ShieldCheck } from 'lucide-react';
 
 export default function ComparisonCard({ comparison, calculation }) {
   if (!comparison || !calculation) return null;

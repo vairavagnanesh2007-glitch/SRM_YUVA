@@ -12,6 +12,7 @@ import AttendanceHistoryPage from './pages/AttendanceHistoryPage';
 import LeavePlannerPage from './pages/LeavePlannerPage';
 import FreeClassLocatorPage from './pages/FreeClassLocatorPage';
 import AttendanceAdvisor from './components/AttendanceAdvisor';
+import ErrorBoundary from './components/ErrorBoundary';
 import { ShieldCheck, Cpu, Terminal, Sparkles, MapPin } from 'lucide-react';
 
 export default function App() {
@@ -46,61 +47,63 @@ export default function App() {
 
         {/* Main Content Area */}
         <main className="flex-1">
-          <Routes>
-            {/* The main root route is directly the Attendance Predictor! */}
-            <Route 
-              path="/" 
-              element={
-                <PredictorPage 
-                  presetScenario={presetScenario} 
-                  onClearPreset={() => setPresetScenario(null)} 
-                />
-              } 
-            />
-            <Route 
-              path="/calculator" 
-              element={
-                <PredictorPage 
-                  presetScenario={presetScenario} 
-                  onClearPreset={() => setPresetScenario(null)} 
-                />
-              } 
-            />
-            <Route 
-              path="/daily-attendance" 
-              element={<DailyAttendancePage />} 
-            />
-            <Route 
-              path="/history" 
-              element={<AttendanceHistoryPage />} 
-            />
-            <Route 
-              path="/leave-planner" 
-              element={<LeavePlannerPage />} 
-            />
-            <Route 
-              path="/dashboard" 
-              element={<DashboardPage />} 
-            />
-            <Route 
-              path="/od-simulator" 
-              element={<ODSimulatorPage />} 
-            />
-            <Route 
-              path="/timetable" 
-              element={<TimetablePage />} 
-            />
-            <Route 
-              path="/locator" 
-              element={<FreeClassLocatorPage />} 
-            />
-            <Route 
-              path="/free-class-locator" 
-              element={<FreeClassLocatorPage />} 
-            />
-            {/* Fallback to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <ErrorBoundary>
+            <Routes>
+              {/* The main root route is directly the Attendance Predictor! */}
+              <Route 
+                path="/" 
+                element={
+                  <PredictorPage 
+                    presetScenario={presetScenario} 
+                    onClearPreset={() => setPresetScenario(null)} 
+                  />
+                } 
+              />
+              <Route 
+                path="/calculator" 
+                element={
+                  <PredictorPage 
+                    presetScenario={presetScenario} 
+                    onClearPreset={() => setPresetScenario(null)} 
+                  />
+                } 
+              />
+              <Route 
+                path="/daily-attendance" 
+                element={<DailyAttendancePage />} 
+              />
+              <Route 
+                path="/history" 
+                element={<AttendanceHistoryPage />} 
+              />
+              <Route 
+                path="/leave-planner" 
+                element={<LeavePlannerPage />} 
+              />
+              <Route 
+                path="/dashboard" 
+                element={<DashboardPage />} 
+              />
+              <Route 
+                path="/od-simulator" 
+                element={<ODSimulatorPage />} 
+              />
+              <Route 
+                path="/timetable" 
+                element={<TimetablePage />} 
+              />
+              <Route 
+                path="/locator" 
+                element={<FreeClassLocatorPage />} 
+              />
+              <Route 
+                path="/free-class-locator" 
+                element={<FreeClassLocatorPage />} 
+              />
+              {/* Fallback to home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </ErrorBoundary>
         </main>
 
         {/* Real Interactive AI Chat Bot with Speech Recognition & Synthesis */}

@@ -3,11 +3,9 @@ import { Sliders, Flame, ShieldAlert, ArrowRight, RotateCcw, AlertTriangle } fro
 import { simulateWhatIf } from '../services/api';
 
 export default function WhatIfSimulator({ calculation }) {
-  if (!calculation) return null;
-
-  const C = calculation.classesConducted;
-  const A = calculation.classesAttended;
-  const R = calculation.classesRemaining;
+  const C = calculation?.classesConducted || 0;
+  const A = calculation?.classesAttended || 0;
+  const R = calculation?.classesRemaining || 0;
 
   const [missNext, setMissNext] = useState(0);
   const [attendNext, setAttendNext] = useState(0);
@@ -15,6 +13,7 @@ export default function WhatIfSimulator({ calculation }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!calculation) return;
     // Run simulation whenever missNext or attendNext changes
     let isMounted = true;
     const runSim = async () => {
@@ -56,6 +55,8 @@ export default function WhatIfSimulator({ calculation }) {
   const projected = simulationResult?.projected || calculation;
   const impact = simulationResult?.impact || {};
   const isDetentionTriggered = impact.isDetentionTriggered;
+
+  if (!calculation) return null;
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
