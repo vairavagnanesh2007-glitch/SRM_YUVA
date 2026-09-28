@@ -10,8 +10,9 @@ import TimetablePage from './pages/TimetablePage';
 import DailyAttendancePage from './pages/DailyAttendancePage';
 import AttendanceHistoryPage from './pages/AttendanceHistoryPage';
 import LeavePlannerPage from './pages/LeavePlannerPage';
+import FreeClassLocatorPage from './pages/FreeClassLocatorPage';
 import AttendanceAdvisor from './components/AttendanceAdvisor';
-import { ShieldCheck, Cpu, Terminal, Sparkles } from 'lucide-react';
+import { ShieldCheck, Cpu, Terminal, Sparkles, MapPin } from 'lucide-react';
 
 export default function App() {
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
@@ -89,6 +90,14 @@ export default function App() {
               path="/timetable" 
               element={<TimetablePage />} 
             />
+            <Route 
+              path="/locator" 
+              element={<FreeClassLocatorPage />} 
+            />
+            <Route 
+              path="/free-class-locator" 
+              element={<FreeClassLocatorPage />} 
+            />
             {/* Fallback to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -114,15 +123,20 @@ export default function App() {
               </div>
               <div>
                 <span className="font-semibold text-slate-800">
-                  Overworld Hackathon Round 1 — Attendance Predictor
+                  Overworld Hackathon — Attendance Predictor & Free Class Locator
                 </span>
                 <p className="text-[11px] text-slate-500">
-                  Official Solution for SRM Institute of Science & Technology (SEEE)
+                  Unified Solution for SRM Institute of Science & Technology (SEEE) • Round 1 & Round 2
                 </p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-indigo-600" />
+                <span>3D Spatial Room Locator</span>
+              </span>
+              <span className="text-slate-300">•</span>
               <span className="flex items-center gap-1.5">
                 <Cpu className="w-3.5 h-3.5 text-blue-600" />
                 <span>Deterministic Math Engine</span>
@@ -131,11 +145,6 @@ export default function App() {
               <span className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Real AI Advisor Bot</span>
-              </span>
-              <span className="text-slate-300">•</span>
-              <span className="flex items-center gap-1.5">
-                <Terminal className="w-3.5 h-3.5 text-purple-600" />
-                <span>FastAPI Active</span>
               </span>
             </div>
 
@@ -151,6 +160,10 @@ export default function App() {
           isOpen={isDemoModalOpen}
           onClose={() => setIsDemoModalOpen(false)}
           onSelectScenario={(scenario) => {
+            if (scenario.isRound2Link) {
+              window.location.href = '/locator';
+              return;
+            }
             handleSelectScenario(scenario);
             if (window.location.pathname !== '/' && window.location.pathname !== '/calculator') {
               window.location.href = '/';

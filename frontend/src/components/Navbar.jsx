@@ -13,7 +13,9 @@ import {
   X,
   HelpCircle,
   Clock,
-  Zap
+  Zap,
+  Building2,
+  MapPin
 } from 'lucide-react';
 
 export default function Navbar({ onOpenDemo, onOpenGuide }) {
@@ -35,6 +37,7 @@ export default function Navbar({ onOpenDemo, onOpenGuide }) {
 
   const navLinks = [
     { to: '/', label: 'Predictor', icon: Calculator },
+    { to: '/locator', label: 'Room Locator', icon: Building2, isRound2: true },
     { to: '/daily-attendance', label: 'Daily Mark', icon: CalendarCheck, isNew: true },
     { to: '/history', label: 'History', icon: History, isNew: true },
     { to: '/leave-planner', label: 'Leave Planner', icon: CalendarRange, isNew: true },
@@ -77,7 +80,7 @@ export default function Navbar({ onOpenDemo, onOpenGuide }) {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     isActive
                       ? 'bg-white text-slate-900 shadow-xs border border-slate-200/80 font-semibold'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -85,6 +88,11 @@ export default function Navbar({ onOpenDemo, onOpenGuide }) {
                 >
                   <Icon className="h-3.5 w-3.5 shrink-0" />
                   <span>{item.label}</span>
+                  {item.isRound2 && (
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded-full bg-indigo-600 text-white shadow-xs">
+                      R2
+                    </span>
+                  )}
                   {item.isNew && (
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-0.5" />
                   )}
@@ -149,14 +157,21 @@ export default function Navbar({ onOpenDemo, onOpenGuide }) {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`flex items-center gap-2 p-2.5 rounded-xl text-xs font-medium transition-all ${
+                  className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-medium transition-all ${
                     isActive
                       ? 'bg-slate-100 text-slate-900 font-semibold'
                       : 'text-slate-700 hover:bg-slate-50'
                   }`}
                 >
-                  <Icon className="h-4 w-4 text-slate-500" />
-                  <span>{item.label}</span>
+                  <div className="flex items-center gap-2">
+                    <Icon className="h-4 w-4 text-slate-500" />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.isRound2 && (
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded-full bg-indigo-600 text-white">
+                      R2
+                    </span>
+                  )}
                 </Link>
               );
             })}

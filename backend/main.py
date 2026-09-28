@@ -7,11 +7,12 @@ from backend.routes.simulation import router as simulation_router
 from backend.routes.od import router as od_router
 from backend.routes.chat import router as chat_router
 from backend.routes.dashboard import router as dashboard_router
+from backend.routes.rooms import router as rooms_router
 from backend.services.timetable_service import timetable_service
 
 app = FastAPI(
-    title="Overworld Attendance Predictor API (Phase 1 & 2)",
-    description="Authoritative calculation engine, real timetable schedule matrix, On-Duty simulator, and AI Advisor chatbot.",
+    title="Overworld Attendance Predictor & Free Class Locator API (Round 1 & 2)",
+    description="Authoritative calculation engine, real timetable schedule matrix, On-Duty simulator, AI Advisor, and Free Class Locator.",
     version="2.0.0"
 )
 
@@ -31,6 +32,7 @@ app.include_router(simulation_router)
 app.include_router(od_router)
 app.include_router(chat_router)
 app.include_router(dashboard_router)
+app.include_router(rooms_router)
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):

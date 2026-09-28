@@ -64,6 +64,15 @@ export default function DemoModal({ isOpen, onClose, onSelectScenario }) {
       todayDate: "2026-09-28",
       planningDate: "2026-11-29",
       description: "Currently at 92%. Required classes for 75% is 0. Student can safely miss up to 13 classes and still stay above 75%."
+    },
+    {
+      id: "round2_room_locator",
+      title: "Scenario 5: 📍 Round 2 — Free Class Locator & 3D Map",
+      badge: "ROUND 2 OFFICIAL",
+      badgeColor: "bg-indigo-50 text-indigo-800 border-indigo-300 font-bold",
+      icon: Sparkles,
+      isRound2Link: true,
+      description: "Interactive 3D Spatial Map across 7 floors of IST Building. Real-time availability from 10 timetables, AI natural language room search, live countdown timer, and 1-click WhatsApp squad summons."
     }
   ];
 
