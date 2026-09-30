@@ -40,3 +40,5 @@ dataset/images/
 # Large local zip archives
 drive-download*.zip
 attendance_predictor_*.zip
+
+.vercel

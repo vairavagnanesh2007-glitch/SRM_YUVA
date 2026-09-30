@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+frontend/node_modules
+
+# Python cache & virtualenvs
+__pycache__
+*.pyc
+.pytest_cache
+env
+venv
+.venv
+
+# Large archives and media
+*.zip
+dataset/extracted/
+dataset/images/
+problem_statement/
+
+# Git and logs
+.git
+*.log
+.DS_Store
